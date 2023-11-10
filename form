@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabbed Multi-Step Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            align-items: center;
+        }
+
+        .form-container {
+            flex: 1;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .tab {
+            display: none;
+        }
+
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn.active {
+            background-color: #2196F3; /* Active step color */
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .btn-next,
+        .btn-prev {
+            background-color: #FF9800; /* Change this color to your desired color for Next and Previous buttons */
+        }
+
+        .btn-next:hover,
+        .btn-prev:hover {
+            background-color: #FFA726; /* Change this color to your desired hover color for Next and Previous buttons */
+        }
+
+        .btn-container {
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .tab-link {
+            margin-right: 5px;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #f2f2f2;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 0 10px 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Customize your package with popular add-ons</h1>
+    <!-- Main Content -->
+    <div class="form-container">
+        <!-- Step Buttons -->
+        <div class="btn-container">
+            <button class="btn tab-link" onclick="changeTab(1)">Step 1</button>
+            <button class="btn tab-link" onclick="changeTab(2)">Step 2</button>
+            <button class="btn tab-link" onclick="changeTab(3)">Step 3</button>
+        </div>
+
+        <!-- Content -->
+        <div class="tab" id="tab1">
+            <h2>Step 1</h2>
+            <p>This is step 1</p>
+        </div>
+
+        <div class="tab" id="tab2">
+            <h2>Step 2</h2>
+            <p>This is step 2</p>
+        </div>
+
+        <div class="tab" id="tab3">
+            <h2>Step 3</h2>
+            <p>This is step 3</p>
+        </div>
+
+        <!-- Next/Previous Buttons -->
+        <div class="btn-container">
+            <button class="btn btn-prev" onclick="prevTab()">Previous</button>
+            <button class="btn btn-next" onclick="nextTab()">Next</button>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>In Your Cart</h2>
+        <p>This is a fixed sidebar</p>
+        <button class="btn btn-next">Checkout</button>
+    </div>
+</div>
+
+<script>
+    let currentTab = 1;
+
+    function showTab(n) {
+        const tabs = document.getElementsByClassName("tab");
+        for (let i = 0; i < tabs.length; i++) {
+            tabs[i].style.display = "none";
+        }
+        tabs[n - 1].style.display = "block";
+
+        // Remove the 'active' class from all buttons
+        const buttons = document.getElementsByClassName("btn");
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].classList.remove("active");
+        }
+
+        // Add the 'active' class to the current button
+        buttons[n - 1].classList.add("active");
+    }
+
+    function changeTab(n) {
+        if (n >= 1 && n <= 3) {
+            currentTab = n;
+            showTab(currentTab);
+        }
+    }
+
+    function nextTab() {
+        if (currentTab < 3) {
+            currentTab++;
+            showTab(currentTab);
+        }
+    }
+
+    function prevTab() {
+        if (currentTab > 1) {
+            currentTab--;
+            showTab(currentTab);
+        }
+    }
+
+    // Show the first tab by default
+    showTab(currentTab);
+</script>
+
+</body>
+</html>
